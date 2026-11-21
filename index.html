@@ -38,12 +38,11 @@ main,header,footer{position:relative;z-index:2}
 header{position:sticky;top:0;z-index:10;transition:transform .45s cubic-bezier(.3,.7,.2,1),background .4s;will-change:transform;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 header.hide{transform:translateY(-100%)}
 nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}
-.logo{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);transition:border-color .3s,transform .3s,background .3s}
-.logo svg{width:26px;height:26px;overflow:visible}
-.logo .a{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.logo .bar{fill:none;stroke:var(--maroon);stroke-width:3;stroke-linecap:round;transform-box:fill-box;transform-origin:center;transition:transform .4s cubic-bezier(.3,.7,.2,1)}
+.logo{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);text-decoration:none;transition:border-color .3s,transform .3s}
+.logo b{font-family:var(--display);font-weight:900;font-size:1.55rem;line-height:1;color:var(--green);margin-top:-3px}
+.logo::after{content:"";position:absolute;bottom:7px;left:50%;width:14px;height:2px;margin-left:-7px;border-radius:2px;background:var(--maroon);transition:transform .4s cubic-bezier(.3,.7,.2,1),width .4s,margin .4s}
 .logo:hover{border-color:var(--green);transform:translateY(-2px)}
-.logo:hover .bar{transform:rotate(-14deg) translateY(-1px)}
+.logo:hover::after{width:20px;margin-left:-10px;transform:rotate(-12deg)}
 nav ul{display:flex;gap:1.5rem;list-style:none;padding:0;font-size:.95rem}
 nav ul a{text-decoration:none;color:var(--muted);position:relative;padding:.2rem 0}
 nav ul a::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;background:var(--maroon);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s}
@@ -185,7 +184,7 @@ footer{border-top:1px solid var(--line);padding:2rem 0;color:var(--muted);font-s
 
 <header><div class="wrap"><nav>
   <a class="logo" href="#top" aria-label="Md Al Amin Sheikh, back to top">
-    <svg viewBox="0 0 36 36" aria-hidden="true"><path class="a" d="M7 30 L18 6 L29 30"/><path class="bar" d="M12 22 H24"/></svg>
+    <b aria-hidden="true">A</b>
   </a>
   <ul>
     <li><a href="#about">About</a></li><li><a href="#work">Experience</a></li><li><a href="#projects">Projects</a></li>
@@ -464,7 +463,9 @@ if(fine&&!reduce){
     trend.style.opacity=s>=2&&s<3?1:(s<2?1:0);
     tip.classList.toggle('on',s===4);
     cap.textContent=caps[s];
-    bs.forEach(function(b,i){b.classList.toggle('on',i===s);b.classList.toggle('done',i<s)});
+    bs.forEach(function(b){b.classList.remove('on','done')});
+    void stepsEl.offsetWidth;
+    bs.forEach(function(b,i){if(i===s)b.classList.add('on');else if(i<s)b.classList.add('done')});
   }
   function start(){clearInterval(timer);if(reduce)return;timer=setInterval(function(){go((cur+1)%5)},3400)}
   go(0);start();
